@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "sdk_version": "0.22.2",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://ietkagvjkkyohfqripgi.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "alm-international-mcp",
+      "version": "0.1.0",
+      "title": "ALM International"
+    },
+    "tools": [
+      {
+        "name": "list_products",
+        "title": "List products",
+        "description": "List active products in the ALM International catalog.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Optional name search filter.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max items to return (default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_my_orders",
+        "title": "Get my orders",
+        "description": "List the signed-in user's orders from ALM International.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Max orders to return (default 10).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "track_order",
+        "title": "Track order",
+        "description": "Track an ALM International order using the order number and the phone number used at checkout.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "order_number": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The order number, e.g. ALM-2026-000123."
+            },
+            "phone": {
+              "type": "string",
+              "minLength": 6,
+              "description": "The phone number used at checkout."
+            }
+          },
+          "required": [
+            "order_number",
+            "phone"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
